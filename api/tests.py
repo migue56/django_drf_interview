@@ -20,6 +20,16 @@ class Build(TestCase):
             sal.department  = 'department%i'%i
             sal.salary  = '%i'%i
             sal.save()
+            print (sal)
+            
+        i=86
+        sal= Salaries()
+        sal.name = 'FULGIAM HUDSON,  DOMINIQUE'
+        sal.position  = 'position%i'%i
+        sal.department  = 'department%i'%i
+        sal.salary  = '%i'%i
+        #sal.save()
+        print (sal)
             
 class SalariesTest(Build):
 
