@@ -16,7 +16,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
-    'api'
+    'api',
 ]
 
 MIDDLEWARE = [
@@ -77,7 +77,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-APPEND_SLASH=False 
 # Internationalization
 # https://docs.djangoproject.com/en/2.0/topics/i18n/
 

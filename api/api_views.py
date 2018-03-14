@@ -4,14 +4,17 @@ from rest_framework.response import Response
 from api.models import Salaries
 from api.serializers import SalariesSerializer
 from django.http.response import HttpResponse
-
+#from rest_framework.parsers import JSONPaserser
 
 class SalariesAPIView(GenericAPIView):
     queryset = Salaries.objects.all()
     serializer_class = SalariesSerializer
 
     def get(self, request, *args, **kwargs):
-        
+        """
+        Return a list of all the existing of Salaries, with the  param name  contain
+              url: http://localhost:8000/api/salarie/?name=AARON
+        """
         name = request.query_params.get('name')  
         if name:  
            self.queryset= self.queryset.filter(name__contains=name)
@@ -22,25 +25,41 @@ class SalariesAPIView(GenericAPIView):
     
     
     def post(self, request , *args, **kwargs):
-        data_valid = SalariesSerializer(request.data)
-        print (request.data)
-        if data_valid.is_valid() :
-                data_valid.save()
+        """
+        post:
+        Create a new insance of Salies.
+            url: http://localhost:8000/api/salarie/
+            data: {
+                    "name": "FULGIAM HUDSON,  DOMINIQUE",
+                    "position": "CLERK IV",
+                    "department": "HEALTH",
+                    "salary": "$63708.00"
+                }
+
+ 
+        """
+        data_salaries= Salaries()
+        data_valid = SalariesSerializer(data_salaries,data=request.data)
+        if data_valid.is_valid():
+                object = Salaries(data_valid)
+                object.save()
                 return response(data_valid.data)
         else:
             return HttpResponse(status=404)
     
     def put(self, request, pk, *args, **kwargs):
-        
+        """
+        put:
+        Change the values on data json of request
+            url: http://localhost:8000/api/salarie/<id>
+            data: {  "salary": "$100" }
+
+        """
         print (pk)
-        data_salaries= Salaries.objects.filter(pk=pk)
-        print (data_salaries)
-        if data_salaries:
-            print (request.data)
-            data_salaries.salary=request.data.get('salary')
-            data_salaries.save
-            print (data_salaries)
-            object = SalariesSerializer(data_salaries)
-            return Response(object.data)
+        data_salaries= Salaries.objects.get(pk=pk)
+        data_valid = SalariesSerializer(data_salaries,data=request.data)
+        if data_valid.is_valid():
+            data_valid.save
+            return Response(data_valid.data)
         return HttpResponse(status=404)
         

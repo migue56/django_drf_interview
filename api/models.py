@@ -7,8 +7,9 @@ class Salaries(models.Model):
     department = models.TextField(blank=True, null=True)
     salary = models.TextField(blank=True, null=True)
 
+    
     class Meta:
-        managed = False
+        #managed = False
         db_table = 'salaries'
         verbose_name = 'salary'
         verbose_name_plural = 'salaries'

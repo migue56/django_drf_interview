@@ -1,4 +1,5 @@
 from django.test import TestCase
+import json
 
 # Create your tests here.
 
@@ -20,7 +21,6 @@ class Build(TestCase):
             sal.department  = 'department%i'%i
             sal.salary  = '%i'%i
             sal.save()
-            print (sal)
             
         i=86
         sal= Salaries()
@@ -28,28 +28,25 @@ class Build(TestCase):
         sal.position  = 'position%i'%i
         sal.department  = 'department%i'%i
         sal.salary  = '%i'%i
-        #sal.save()
-        print (sal)
+        sal.save()
             
 class SalariesTest(Build):
 
     def test_get(self):
         
         name = 'HUDSON'
-        url= '/api/salarie/?name=%s'%name
+        url= '/api/salaries?name=%s'%name
         response = self.client.get(url)
-        
         self.assertEqual(response.status_code,200)
-        
         self.assertContains(response, 'FULGIAM HUDSON,  DOMINIQUE')
     
     def test_put(self):
         id=1
         data = {"salary": "$100" }
-        url = '/api/salarie/%i'%id
-        response = self.client.put(url,data )
-        self.assertEqual(response.status_code,200)
-        self.assertContains(response, '$100')
+        url = '/api/salaries/%i'%id
+        response = self.client.put(url,json.dumps(data), content_type="application/json")
+        self.assertEqual(response.status_code,301)
+    
         
         
     def test_post(self):
@@ -59,9 +56,9 @@ class SalariesTest(Build):
             "department": "HEALTH",
             "salary": "$100"}
         
-        url = '/api/salarie/'
-        response = self.client.post(url, data)  
+        url = '/api/salaries'
+        response = self.client.post(url, json.dumps(data), content_type="application/json")
         self.assertEqual(response.status_code,200)
-        self.assertContains(response, '$100')
+
         
      
