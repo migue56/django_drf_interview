@@ -7,6 +7,10 @@ from django.http.response import HttpResponse
 
 
 class SalariesAPIView(GenericAPIView):
+    """
+     Retrieve, update or delete  of Salaries
+    """
+    
     queryset = Salaries.objects.all()
     serializer_class = SalariesSerializer
 
