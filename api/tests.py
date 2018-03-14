@@ -51,6 +51,7 @@ class SalariesTest(Build):
         
     def test_post(self):
         data =  {
+            "id": 200,
             "name": "FULGIAM HUDSON,  DOMINIQUE",
             "position": "CLERK IV",
             "department": "HEALTH",

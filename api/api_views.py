@@ -38,12 +38,10 @@ class SalariesAPIView(GenericAPIView):
 
  
         """
-        
         data_valid = SalariesSerializer(data=request.data)
-        print (data_valid)
         if data_valid.is_valid():
-                data_valid.save()
-                return Response(data_valid.data, status=status.HTTP_201_CREATED)
+            data_valid.save()
+            return Response(data_valid.data)
         else:
             return HttpResponse(status=404)
     
