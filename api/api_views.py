@@ -4,7 +4,7 @@ from rest_framework.response import Response
 from api.models import Salaries
 from api.serializers import SalariesSerializer
 from django.http.response import HttpResponse
-#from rest_framework.parsers import JSONPaserser
+
 
 class SalariesAPIView(GenericAPIView):
     queryset = Salaries.objects.all()
@@ -38,12 +38,12 @@ class SalariesAPIView(GenericAPIView):
 
  
         """
-        data_salaries= Salaries()
-        data_valid = SalariesSerializer(data_salaries,data=request.data)
+        
+        data_valid = SalariesSerializer(data=request.data)
+        print (data_valid)
         if data_valid.is_valid():
-                object = Salaries(data_valid)
-                object.save()
-                return response(data_valid.data)
+                data_valid.save()
+                return Response(data_valid.data, status=status.HTTP_201_CREATED)
         else:
             return HttpResponse(status=404)
     
@@ -55,7 +55,6 @@ class SalariesAPIView(GenericAPIView):
             data: {  "salary": "$100" }
 
         """
-        print (pk)
         data_salaries= Salaries.objects.get(pk=pk)
         data_valid = SalariesSerializer(data_salaries,data=request.data)
         if data_valid.is_valid():

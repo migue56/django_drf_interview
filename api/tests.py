@@ -19,7 +19,7 @@ class Build(TestCase):
             sal.name = 'name%i'%i
             sal.position  = 'position%i'%i
             sal.department  = 'department%i'%i
-            sal.salary  = '%i'%i
+            sal.salary  = '$%i'%i
             sal.save()
             
         i=86

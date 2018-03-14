@@ -9,7 +9,7 @@ class Salaries(models.Model):
 
     
     class Meta:
-        #managed = False
+        managed = False
         db_table = 'salaries'
         verbose_name = 'salary'
         verbose_name_plural = 'salaries'
